@@ -14,5 +14,7 @@ in c,c++ have compiler an dinterpeter ,like that node use chrome's v8 engine
     :http module what handleed :reqest,response
 
 :-WHAT IS PACKAGE,JSON FILE 
-    question: node js single threded ya multi threded ?
+    question: node js single threded ya multi threded ? 
      ans: single threded :- aek time ae aek command ne j run kre
+     nodejs is async 
+     
