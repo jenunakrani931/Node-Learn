@@ -1,0 +1,52 @@
+17-7
+in c,c++ have compiler and interpeter ,like that node use chrome's v8 engine 
+: Some revision on javascript 
+:-Core Module : je pele thi j made krela hoi. like console.log. that not made by us.
+    :Global :- which module need require that calles Globle ex:-console
+    :Non-Global : which module not need require :fs :-(means "file system")
+
+:-HOW TO CREATE FILE :
+         using:- fs.writeFileSync("FileName", Content) 
+            :-it's need to require
+
+:- CREATE SERVER    
+    :http require :-into nodejs server ni reqest and response ne handle kre
+    :http module what handleed :reqest,response
+
+:-WHAT IS PACKAGE,JSON FILE 
+    question: node js single threded ya multi threded ? 
+     ans: single threded :- aek time ae aek command ne j run kre
+     nodejs is async 
+     
+5-8
+req-response
+ :-req: when data get to database ya server
+ :-response : when send data
+
+:make simple api without connect database
+    use like :- resp.writeHead() ,resp.write()
+
+revise to response status codes :-
+ Like 
+  200:-ok
+  201:-created
+  404:-not found
+  500:-internal server error
+
+ Getting input from command line using process.argv
+  :process :- process is object in nodejs
+  :file remove using fs.unlinkSync
+created multiple file dynamically in a perticuler folder
+
+crud 
+    : create :- writeFileSync
+    : read   :- readFile 
+    : update :- appendFile  
+    : delete :- unlinkSync
+    : rename FileName :-rename
+
+7-8
+buffer: Temporary memory location
+revise async and sync 
+
+promises:
