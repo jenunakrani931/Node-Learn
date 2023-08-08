@@ -50,3 +50,43 @@ buffer: Temporary memory location
 revise async and sync 
 
 promises:
+
+How to work node in background 
+    : code  = call stack -> : node APIs -> : Callback Queue
+            :execution
+    :- All this pocess call EventLoop
+
+ExprerssJs
+    : two perameters : resp,req 
+    req: if client need any data and there req to server that call req 
+    resp : when client send req to server that time server give response 
+    app.use(middleware) is called every time a request is sent to the server.
+
+render html and json
+    : get value into parameter
+
+make simple html web page
+    express.static : is this one type of methode to excess static content
+    path : get any file ya folder path 
+
+file load into .get methode using sendFile
+but in ejs use render()
+
+Templete engine
+next() : It will execute the code after all the middleware function is finished.
+
+Middleware
+    : application Middleware 
+    : router level Middleware
+
+install mongodb compass
+perform simple crud in mongodb-compass 
+    : using command and without using command
+
+connect mongo with nodejs and fetch data
+
+    first to need require mongodb
+    after give url for connect
+    after give database name and collection name and in a last response is show 
+fetch data useing node
+insert data is try but occurd error 
