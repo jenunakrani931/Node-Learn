@@ -1,5 +1,4 @@
 const dbConnect = require("./mongodb");
-const insert = require('./insert');
 
 // dbConnect().then((res) => {
 //   res.find().toArray().then((data) => {
@@ -12,8 +11,7 @@ const main = async () => {
   data = await data.find().toArray();
   console.log(data);
 };
-// main();
-// insert()
+main();
 
 
 

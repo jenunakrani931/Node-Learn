@@ -90,3 +90,12 @@ connect mongo with nodejs and fetch data
     after give database name and collection name and in a last response is show 
 fetch data useing node
 insert data is try but occurd error 
+
+8-7
+simple crud opretion using mongodb
+known about mongoose    
+ : mongoose.connect
+ : mongoose.Schema
+ : mongoose.model
+crud using mongoose
+known diffrent beteen mongodb nd mongoose

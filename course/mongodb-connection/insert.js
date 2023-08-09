@@ -1,9 +1,17 @@
 const dbConnect = require("./mongodb");
 
-module.exports = insert = async () => {
-  const db = await dbConnect();
-  const result =await db.insert({
-    name:'myBook',brand:'vivo',price:400,category:'book'
-  })
+const inserts = async () => {
+  let data = await dbConnect();
+  let result = await data.insertMany([
+    {
+      name: "book1",
+      brand: "vivo",
+      price: 400,
+      category: "book",
+    },
+    { name: "book2", brand: "micromax", price: 520, category: "book" },
+  ]);
   console.log(result);
 };
+
+inserts();
