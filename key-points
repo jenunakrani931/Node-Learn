@@ -91,7 +91,7 @@ connect mongo with nodejs and fetch data
 fetch data useing node
 insert data is try but occurd error 
 
-8-7
+8-8
 simple crud opretion using mongodb
 known about mongoose    
  : mongoose.connect
@@ -99,3 +99,19 @@ known about mongoose
  : mongoose.model
 crud using mongoose
 known diffrent beteen mongodb nd mongoose
+
+9-8
+1)File upload api
+2)Information about OS module
+    :os.userInfo() => know to userName, homedir..
+    :os.platform() => linux/win
+    :os.freemem() => free space
+    :os.totalmem() => total space
+
+3)Events and Event Emitter
+    : Use for the count Howmany times call api, work as same as onClick.
+    : First need to require, after store into var, use event.emit and event.on for the count 
+4)connect node with mysql and create crud api but in this pc not 
+  installed xampp so i not perform that task precticl
+
+5)start project

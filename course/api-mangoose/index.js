@@ -1,11 +1,20 @@
 const express = require("express");
-const multer = require('multer')
+const multer = require("multer");
+const os = require("os");
 require("./config");
 const product = require("./product");
 
 const app = express();
 
 app.use(express.json());
+
+//os modules
+// console.log(os.arch());
+// console.log(os.freemem()/(1024*1024*1024));
+// console.log(os.totalmem()/(1024*1024*1024));
+// console.log(os.hostname());
+// console.log(os.platform());
+// console.log(os.userInfo());
 
 //create
 app.post("/create", async (req, resp) => {
@@ -44,7 +53,18 @@ app.get("/search/:key", async (req, resp) => {
 });
 
 // file upload
-app.post("/upload",(req,resp)=>{
-    resp.send('upload')
-})
+const Upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads"); //uploads is file name
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname + "-" + Date.now() + ".jpg");
+    },
+  }),
+}).single("upload_file");
+
+app.post("/upload", Upload, (req, resp) => {
+  resp.send("Upload file successfully");
+});
 app.listen(4000);
