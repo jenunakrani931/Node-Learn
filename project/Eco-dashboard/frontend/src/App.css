@@ -1,12 +1,24 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.main-sidebar {
+  background-color: rgb(34, 34, 34);
+  padding: 1px;
 }
-
+.sidebar {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding: 1px;
+  margin-top: 15px;
+}
+.sidebar li {
+  margin-left: 20px;
+}
+.link {
+  text-decoration: none !important;
+  color: #fff;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
