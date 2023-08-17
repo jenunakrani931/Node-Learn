@@ -4,6 +4,8 @@ import MainLayout from "./Layouts/MainLayout";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import AddProduct from "./Components/AddProduct";
+import ProductList from "./Components/ProductList";
+import UpdateProduct from "./Components/UpdateProduct";
 
 const ProtectedRoute = () => {
   const users = localStorage.getItem("user");
@@ -20,15 +22,15 @@ const Route = () => {
       ],
     },
     {
-      element: (  
+      element: (
         <ProtectedRoute>
           <MainLayout />
         </ProtectedRoute>
       ),
       children: [
-        { path: "/product", element: <h1>product</h1> },
-        { path: "/add", element: <AddProduct/> },
-        { path: "/update", element: <h1>update</h1> },
+        { path: "/product", element: <ProductList /> },
+        { path: "/add", element: <AddProduct /> },
+        { path: "/update/:id", element:<UpdateProduct/> },
         { path: "/logout", element: <h1>logout</h1> },
       ],
     },

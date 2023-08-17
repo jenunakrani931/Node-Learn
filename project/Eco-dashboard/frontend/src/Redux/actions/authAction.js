@@ -5,7 +5,7 @@ export const signUp = async (data) => {
     const response = await axios.post("http://localhost:4000/register", data);
     console.log(response);
     return {
-      meassge: "SignUp succesfuly",
+      meassge: "SignUp succesfully",
       success: true,
       data: response.data,
     };
@@ -20,12 +20,13 @@ export const signUp = async (data) => {
 export const login = async (data) => {
   const response = await axios.post("http://localhost:4000/login", data);
   console.log(response);
-  if (response.data.name) {
-    localStorage.setItem("user", JSON.stringify(response.data));
+  if (response.data.token) {
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    localStorage.setItem("token",response.data.token);
     return {
-      meassges: "Login succesfuly",
+      meassges: "Login succesfully",
       success: true,
-      data: response.data,
+      data: response.data.user,
     };
   } else {
     return {

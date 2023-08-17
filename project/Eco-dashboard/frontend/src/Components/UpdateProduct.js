@@ -1,11 +1,15 @@
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-import { PRODUCT_ADD_FAILURE, PRODUCT_ADD_SUCCESSFULLY } from "../Redux/types";
-import { addProduct } from "../Redux/actions/productAction";
+import {
+  PRODUCT_UPDATE_FAILURE,
+  PRODUCT_UPDATE_SUCCESSFULLY,
+} from "../Redux/types";
+import { fetchByID, updateProduct } from "../Redux/actions/productAction";
+import { useEffect } from "react";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Name Required "),
@@ -14,21 +18,37 @@ const SignupSchema = Yup.object().shape({
   company: Yup.string().required("Company name Required "),
 });
 
-export default function AddProduct() {
+export default function UpdateProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
+
+  const { product } = useSelector((state) => ({
+    product: state.product.fetchByID,
+  }));
+
+  console.log(product.name);
+  console.log(product.price);
+  console.log(product.category);
+  console.log(product.company);
+  console.log("product", product);
+
+  useEffect(() => {
+    dispatch(fetchByID(params.id));
+  }, [dispatch, params.id]);
 
   const data = JSON.parse(localStorage.getItem("user"))._id;
+
   return (
     <div className="container mt-5">
       <div className="row">
         <div>
           <Formik
             initialValues={{
-              name: "",
-              price: "",
-              category: "",
-              company: "",
+              name: product.name,
+              price: product.price,
+              category: product.category,
+              company: product.company,
             }}
             validationSchema={SignupSchema}
             onSubmit={(values) => {
@@ -37,22 +57,22 @@ export default function AddProduct() {
               const price = values.price;
               const category = values.category;
               const company = values.company;
-              const full = {name, price, category, company, userId};
-              addProduct(full).then((res) => {
+              const full = { name, price, category, company, userId };
+              updateProduct(params.id, full).then((res) => {
                 if (res.success) {
                   alert(res.meassge);
                   dispatch({
-                    type: PRODUCT_ADD_SUCCESSFULLY,
+                    type: PRODUCT_UPDATE_SUCCESSFULLY,
                     paload: res.meassge,
                   });
-                  navigate('/product')
+                  navigate("/product");
                 } else {
                   alert(
                     res.message || "Something went wrong! Please try again."
                   );
 
                   dispatch({
-                    type: PRODUCT_ADD_FAILURE,
+                    type: PRODUCT_UPDATE_FAILURE,
                     payload: res.message,
                   });
                 }
@@ -69,7 +89,7 @@ export default function AddProduct() {
             }) => (
               <form onSubmit={handleSubmit} id="form" className="row">
                 <div className=" mx-auto col-10 col-md-9 col-lg-8 ">
-                  <h1 className="mb-5">Add Product</h1>
+                  <h1 className="mb-5">Update Product</h1>
                   <label htmlFor="name" className="mb-2">
                     Name
                   </label>
@@ -165,7 +185,7 @@ export default function AddProduct() {
                   type="submit"
                   className="mx-auto col-10 col-md-9 col-lg-8 p-3 mt-3  bg-dark text-light btn  border-0 rounded"
                 >
-                  Add Product
+                  Update Product
                 </button>
               </form>
             )}

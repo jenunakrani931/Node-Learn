@@ -12,7 +12,7 @@ const Navbar = () => {
   const data = localStorage.getItem("user");
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.clear();
     navigate("/");
   };
 
@@ -34,12 +34,6 @@ const Navbar = () => {
               Add Product
             </Link>
           </li>
-          <li>
-            <Link to="/update" className="link">
-              Update Product
-            </Link>
-          </li>
-          <li></li>
         </ul>
         <Button
           variant=""
