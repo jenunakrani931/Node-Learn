@@ -42,9 +42,9 @@ const ProductList = () => {
   };
 
   const handleUpdate = (_id) => {
-    navigate(`/update/:${_id}`);
+    navigate(`/update/${_id}`);
   };
-  
+
   const productList = data.filter((product) => {
     if (!search) {
       return data;
@@ -71,17 +71,18 @@ const ProductList = () => {
         <input
           type="text"
           size="40"
-          className="border p-2 search shadow-05"
+          placeholder="Search product"
+          className="border p-2 search shadow-05 mt-4"
           onChange={handleSearch}
         />
-        <Table striped bordered hover className="mt-5">
+        <Table striped bordered hover className="mt-4">
           <thead>
             <tr>
               <th>Name</th>
               <th>Category</th>
               <th>Company</th>
               <th>Price</th>
-              <th>Action</th>
+              <th className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>

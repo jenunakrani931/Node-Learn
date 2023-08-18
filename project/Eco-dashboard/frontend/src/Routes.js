@@ -30,7 +30,7 @@ const Route = () => {
       children: [
         { path: "/product", element: <ProductList /> },
         { path: "/add", element: <AddProduct /> },
-        { path: "/update/:id", element:<UpdateProduct/> },
+        { path: "/update/:abc", element:<UpdateProduct/> },
         { path: "/logout", element: <h1>logout</h1> },
       ],
     },

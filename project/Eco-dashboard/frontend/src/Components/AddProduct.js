@@ -6,6 +6,7 @@ import * as Yup from "yup";
 
 import { PRODUCT_ADD_FAILURE, PRODUCT_ADD_SUCCESSFULLY } from "../Redux/types";
 import { addProduct } from "../Redux/actions/productAction";
+import Swal from "sweetalert2";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Name Required "),
@@ -20,8 +21,8 @@ export default function AddProduct() {
 
   const data = JSON.parse(localStorage.getItem("user"))._id;
   return (
-    <div className="container mt-5">
-      <div className="row">
+    <div className="container mt-5 card p-5 shadow border-0 w-50">
+      <div className="row ">
         <div>
           <Formik
             initialValues={{
@@ -37,19 +38,30 @@ export default function AddProduct() {
               const price = values.price;
               const category = values.category;
               const company = values.company;
-              const full = {name, price, category, company, userId};
+              const full = { name, price, category, company, userId };
               addProduct(full).then((res) => {
                 if (res.success) {
-                  alert(res.meassge);
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: res.meassge,
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
                   dispatch({
                     type: PRODUCT_ADD_SUCCESSFULLY,
                     paload: res.meassge,
                   });
-                  navigate('/product')
+                  navigate("/product");
                 } else {
-                  alert(
-                    res.message || "Something went wrong! Please try again."
-                  );
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title:
+                      res.meassge || "Something went wrong! Please try again.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
 
                   dispatch({
                     type: PRODUCT_ADD_FAILURE,
@@ -163,7 +175,7 @@ export default function AddProduct() {
                 </div>
                 <button
                   type="submit"
-                  className="mx-auto col-10 col-md-9 col-lg-8 p-3 mt-3  bg-dark text-light btn  border-0 rounded"
+                  className="mx-auto col-10 col-md-9 col-lg-8 p-3 mt-5  bg-dark text-light btn  border-0 rounded"
                 >
                   Add Product
                 </button>

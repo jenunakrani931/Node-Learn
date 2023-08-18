@@ -1,5 +1,12 @@
 import axios from "axios";
-import { PRODUCT_FETCH_BYID_FAILURE, PRODUCT_FETCH_BYID_SUCCESSFULLY, PRODUCT_FETCH_FAILURE, PRODUCT_FETCH_SUCCESSFULLY, PRODUCT_SEARCH_FAILURE, PRODUCT_SEARCH_SUCCESSFULLY } from "../types";
+import {
+  PRODUCT_FETCH_BYID_FAILURE,
+  PRODUCT_FETCH_BYID_SUCCESSFULLY,
+  PRODUCT_FETCH_FAILURE,
+  PRODUCT_FETCH_SUCCESSFULLY,
+  PRODUCT_SEARCH_FAILURE,
+  PRODUCT_SEARCH_SUCCESSFULLY,
+} from "../types";
 
 export const addProduct = async (data) => {
   try {
@@ -9,7 +16,7 @@ export const addProduct = async (data) => {
     );
     console.log(response);
     return {
-      meassge: "Product add succesfully",
+      meassge: "Product has been add succesfully",
       success: true,
       data: response.data,
     };
@@ -22,8 +29,8 @@ export const addProduct = async (data) => {
 };
 
 export const fetchProduct = () => {
-  return (dispatch) => {
-    axios
+  return async (dispatch) => {
+    await axios
       .get("http://localhost:4000/products")
       .then((response) => {
         dispatch({
@@ -57,13 +64,15 @@ export const deletProduct = async (_id) => {
   }
 };
 
-export const updateProduct = async (_id,data) => {
-  const id = _id.slice(1)
+export const updateProduct = async (_id, data) => {
   try {
-    const response = await axios.put(`http://localhost:4000/productUpdate/${id}`,data);
+    const response = await axios.put(
+      `http://localhost:4000/productUpdate/${_id}`,
+      data
+    );
     console.log(response);
     return {
-      meassge: "Product update succesfully",
+      meassge: "Product has been update succesfully",
       success: true,
       data: response,
     };
@@ -76,10 +85,10 @@ export const updateProduct = async (_id,data) => {
 };
 
 export const fetchByID = (_id) => {
-  const id = _id.slice(1)
+
   return async (dispatch) => {
     await axios
-      .get(`http://localhost:4000/productById/${id}`)
+      .get(`http://localhost:4000/productById/${_id}`)
       .then((response) => {
         dispatch({
           type: PRODUCT_FETCH_BYID_SUCCESSFULLY,

@@ -8,48 +8,47 @@ import {
   PRODUCT_UPDATE_FAILURE,
   PRODUCT_UPDATE_SUCCESSFULLY,
 } from "../Redux/types";
+
 import { fetchByID, updateProduct } from "../Redux/actions/productAction";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string().required("Name Required "),
-  price: Yup.string().required("Price Required "),
-  category: Yup.string().required("Category Required "),
-  company: Yup.string().required("Company name Required "),
+  name: Yup.string().required("Name is require "),
+  price: Yup.string().required("Price is require "),
+  category: Yup.string().required("Category is require "),
+  company: Yup.string().required("Company name is require "),
 });
 
 export default function UpdateProduct() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
-
+  const id = params.abc
   const { product } = useSelector((state) => ({
     product: state.product.fetchByID,
   }));
-
-  console.log(product.name);
-  console.log(product.price);
-  console.log(product.category);
-  console.log(product.company);
   console.log("product", product);
+  console.log("name:-", product.name);
 
   useEffect(() => {
-    dispatch(fetchByID(params.id));
-  }, [dispatch, params.id]);
+    dispatch(fetchByID(id));
+  }, [dispatch]);
 
   const data = JSON.parse(localStorage.getItem("user"))._id;
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 card p-5 shadow border-0 w-50">
       <div className="row">
         <div>
           <Formik
             initialValues={{
-              name: product.name,
-              price: product.price,
-              category: product.category,
-              company: product.company,
+              name: product?.name,
+              price: product?.price,
+              category: product?.category,
+              company: product?.company,
             }}
+            enableReinitialize
             validationSchema={SignupSchema}
             onSubmit={(values) => {
               const userId = data;
@@ -58,18 +57,30 @@ export default function UpdateProduct() {
               const category = values.category;
               const company = values.company;
               const full = { name, price, category, company, userId };
-              updateProduct(params.id, full).then((res) => {
+
+              updateProduct(id, full).then((res) => {
                 if (res.success) {
-                  alert(res.meassge);
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: res.meassge,
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
                   dispatch({
                     type: PRODUCT_UPDATE_SUCCESSFULLY,
                     paload: res.meassge,
                   });
                   navigate("/product");
                 } else {
-                  alert(
-                    res.message || "Something went wrong! Please try again."
-                  );
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title:
+                      res.meassge || "Something went wrong! Please try again.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
 
                   dispatch({
                     type: PRODUCT_UPDATE_FAILURE,

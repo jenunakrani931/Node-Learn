@@ -13,9 +13,12 @@ app.use(express.json());
 
 const varifyToken = (req, resp, next) => {
   let token = req.headers["authorization"];
-  console.log(token);
+  
+  const abc = token.split(" ");
+  const xyz = abc[1];
+
   if (token) {
-    Jwt.verify(token, JwtKey, (err, valid) => {
+    Jwt.verify(xyz, JwtKey, (err, valid) => {
       if (err) {
         resp.status(401).send({ result: "Please provide valid token" });
       } else {
@@ -34,16 +37,14 @@ app.post("/register", async (req, res) => {
   result = result.toObject();
   delete result.password;
 
-  Jwt.sign({ result }, JwtKey, { expiresIn: "1h" }, (err, token) => {
-    res.send({ result, token: token });
-  });
+  res.send({ token: token });
 });
 
 app.post("/login", async (req, res) => {
   const user = await User.findOne(req.body).select("-password");
   if (req.body.email && req.body.password) {
     if (user) {
-      Jwt.sign({ user }, JwtKey, { expiresIn: "1h" }, (err, token) => {
+      Jwt.sign({ user }, JwtKey, { expiresIn: "2d" }, (err, token) => {
         res.send({ user, token: token });
       });
     } else {
@@ -69,12 +70,12 @@ app.get("/products", varifyToken, async (req, res) => {
   }
 });
 
-app.delete("/product/:_id",varifyToken, async (req, res) => {
+app.delete("/product/:_id", varifyToken, async (req, res) => {
   const result = await Product.deleteOne(req.params);
   res.send(result);
 });
 
-app.put("/productUpdate/:_id",varifyToken, async (req, res) => {
+app.put("/productUpdate/:_id", varifyToken, async (req, res) => {
   await Product.updateOne(req.params, { $set: req.body });
   res.send({
     message: "Product updated successfully",
@@ -82,8 +83,9 @@ app.put("/productUpdate/:_id",varifyToken, async (req, res) => {
   });
 });
 
-app.get("/productById/:id",varifyToken, async (req, res) => {
-  const result = await Product.findById({ _id: req.params.id });
+app.get("/productById/:id", async (req, res) => {
+  const result = await Product.findById({ _id: req?.params?.id });
+  console.log("result...",result);
   if (result) {
     res.send(result);
   } else {
@@ -91,7 +93,7 @@ app.get("/productById/:id",varifyToken, async (req, res) => {
   }
 });
 
-app.get("/product-search/:key",varifyToken, async (req, resp) => {
+app.get("/product-search/:key", varifyToken, async (req, resp) => {
   let data = await Product.find({
     $or: [
       { name: { $regex: req.params.key } },

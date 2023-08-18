@@ -7,6 +7,7 @@ import * as Yup from "yup";
 
 import { login } from "../Redux/actions/authAction";
 import { LOGEDIN_FAILURE, LOGEDIN_SUCCESSFULLY } from "../Redux/types";
+import Swal from "sweetalert2";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().required("Email Required "),
@@ -25,7 +26,7 @@ export default function Login() {
       navigate("/product");
     }
   }, []);
-  
+
   return (
     <div className="container mt-5">
       <div className="row">
@@ -41,16 +42,27 @@ export default function Login() {
               login(values).then((res) => {
                 console.log(res);
                 if (res.success) {
-                  alert(res.meassges);
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: res.meassge,
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
                   dispatch({
                     type: LOGEDIN_SUCCESSFULLY,
                     paload: res.meassges,
                   });
                   navigate("/product");
                 } else {
-                  alert(
-                    res.meassge || "Something went wrong! Please try again."
-                  );
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title:
+                      res.meassge || "Something went wrong! Please try again.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
 
                   dispatch({
                     type: LOGEDIN_FAILURE,
